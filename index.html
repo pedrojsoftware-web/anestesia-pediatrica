@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anestesia Pediátrica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- PWA Setup -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Sticky -->
+        <header class="header">
+            <div class="header-content">
+                <img src="https://cdn-icons-png.flaticon.com/512/3719/3719714.png" alt="Icon" class="app-icon">
+                <h1>Anestesia Pediátrica</h1>
+            </div>
+        </header>
+
+        <!-- Controles Secos -->
+        <section class="controls panel glass-panel sticky-controls">
+            <div class="input-group">
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" placeholder="0" min="0" step="0.5">
+            </div>
+            <div class="input-group">
+                <label for="edadMeses">Edad (< 24 meses):</label>
+                <input type="number" id="edadMeses" placeholder="Meses" min="0">
+            </div>
+            <div class="input-group">
+                <label for="edadAnos">Edad (> 2 años):</label>
+                <input type="number" id="edadAnos" placeholder="Años" min="0">
+            </div>
+        </section>
+
+        <!-- Resultados Generales -->
+        <main class="results-container">
+            
+            <!-- Vía Aérea -->
+            <section class="category airway">
+                <h2>VÍA AÉREA</h2>
+                <div class="item">
+                    <span>Tubo endotraq. (sólo para > 3 kg.):</span>
+                    <span id="tuboEndo" class="val-info">--</span>
+                </div>
+                <div class="item">
+                    <span>Mascarilla laríngea:</span>
+                    <span id="mascarillaLaringea" class="val-info green">--</span>
+                </div>
+                <div class="item">
+                    <span>Volumen Máx. hinchado:</span>
+                    <span id="volumenMax" class="val-info green">-- ml</span>
+                </div>
+            </section>
+
+            <!-- Premedicacion -->
+            <section class="category">
+                <h2>PREMEDICACIÓN</h2>
+                <div class="item complex">
+                    <div class="title">MIDAZOLAM IM MG (0,08 mg/kg):</div>
+                    <div class="calc red" id="midaImMg">-- mg</div>
+                    <div class="sub red">SI 1 mg/ml: <span class="green" id="midaImMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">ATROPINA IM MG (0,015 mg/kg):</div>
+                    <div class="calc red" id="atroImMg">-- mg</div>
+                    <div class="sub red">SI 1 mg/ml: <span class="green" id="atroImMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">KETAMINA IM MG (5 mg/kg):</div>
+                    <div class="calc red" id="ketaImMg">-- mg</div>
+                    <div class="sub red">SI 50 mg/ml: <span class="green" id="ketaImMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">MIDAZOLAM ORAL MG (0,375 mg/kg):</div>
+                    <div class="calc red" id="midaOralMg">-- mg</div>
+                    <div class="sub red">SI 2,5 mg/ml: <span class="green" id="midaOralMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">ATROPINA IV (0,01 mg/kg): <span class="green" id="atroIvMl">-- ml</span></div>
+                    <div class="title sub-title">EN CIRUGÍA OCULAR (ESTRABISMO)</div>
+                    <div class="title">ATROPINA IV (0,015 mg/kg): <span class="green" id="atroIvEstrabMl">-- ml</span></div>
+                </div>
+            </section>
+
+            <!-- Profilaxis Alergica -->
+            <section class="category">
+                <h2>PROFILAXIS ALÉRGICA</h2>
+                <div class="item complex">
+                    <div class="title">URBASON (0,5 mg/kg):</div>
+                    <div class="calc red" id="urbasonMg">-- mg</div>
+                    <div class="sub red">SI 10 mg/ml: <span class="green" id="urbasonMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">RANITIDINA (1 mg/kg):</div>
+                    <div class="calc red" id="ranitidinaMg">-- mg</div>
+                    <div class="sub red"><span class="green" id="ranitidinaMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">POLARAMINE (0,1 mg/kg):</div>
+                    <div class="calc red" id="polaramineMg">-- mg</div>
+                    <div class="sub red"><span class="green" id="polaramineMl">-- ml</span></div>
+                </div>
+            </section>
+
+            <!-- Induccion -->
+            <section class="category">
+                <h2>INDUCCIÓN</h2>
+                <div class="item complex">
+                    <div class="title">PROPOFOL (2,5-3 mg/kg):</div>
+                    <div class="calc red"><span id="propofolMgMin">-- mg</span> - <span id="propofolMgMax">-- mg</span></div>
+                    <div class="sub red">SI 10 mg/ml: <span class="green"><span id="propofolMlMin">-- ml</span> - <span id="propofolMlMax">-- ml</span></span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">KETAMINA (1-2 mg/kg):</div>
+                    <div class="calc red"><span id="ketaIndMgMin">-- mg</span> - <span id="ketaIndMgMax">-- mg</span></div>
+                    <div class="sub red">SI 50 mg/ml: <span class="green"><span id="ketaIndMlMin">-- ml</span> - <span id="ketaIndMlMax">-- ml</span></span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">MIDAZOLAM (0,1-0,2 mg/kg):</div>
+                    <div class="calc red"><span id="midaIndMgMin">-- mg</span> - <span id="midaIndMgMax">-- mg</span></div>
+                    <div class="sub red">SI 1 mg/ml: <span class="green"><span id="midaIndMlMin">-- ml</span> - <span id="midaIndMlMax">-- ml</span></span></div>
+                </div>
+            </section>
+
+            <!-- Opiaceos -->
+            <section class="category">
+                <h2>OPIÁCEOS</h2>
+                <div class="item complex">
+                    <div class="title">FENTANILO (1-2 mcg/kg):</div>
+                    <div class="calc red"><span id="fentaMcgMin">-- mcg</span> - <span id="fentaMcgMax">-- mcg</span></div>
+                    <div class="sub red">SI 50 mcg/ml: <span class="green"><span id="fentaMlMin">-- ml</span> - <span id="fentaMlMax">-- ml</span></span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">REMIFENTANILO</div>
+                    <div class="sub white">Preparar concentración 40 mcg/ml (2mg en 50 ml)</div>
+                    <div class="sub white">Rango Normal: 0,2-0,5 mcg/kg/min:</div>
+                    <div class="calc green"><span id="remiMlHMin">-- ml/h</span> - <span id="remiMlHMax">-- ml/h</span></div>
+                </div>
+            </section>
+
+            <!-- Relajantes musculares -->
+            <section class="category">
+                <h2>RELAJANTES MUSCULARES</h2>
+                <div class="item complex">
+                    <div class="title">ROCURONIO (ESMERON):</div>
+                    <div class="sub white">Rango Intubación: 0,45 mg/kg - 0,60 mg/kg</div>
+                    <div class="calc red"><span id="rocuMgMin">-- mg</span> <span id="rocuMgMax" style="margin-left:1rem;">-- mg</span></div>
+                    <div class="sub red">SI 10 mg/ml: <span class="green" style="margin-left:0.5rem;"><span id="rocuMlMin">-- ml</span></span> <span class="green" style="margin-left:1.5rem;"><span id="rocuMlMax">-- ml</span></span></div>
+                    <div class="sub white" style="margin-top:0.5rem;text-align:center;">PERFUSIÓN IV BOMBA: 4 A 16 microgramos/kg/minuto</div>
+                </div>
+                <div class="item complex">
+                    <div class="title">CISATRACURIO (NIMBEX): 0,1 mg/kg:</div>
+                    <div class="calc red" id="cisaMg">-- mg</div>
+                    <div class="sub red">SI 2 mg/ml: <span class="green" id="cisaMl">-- ml</span></div>
+                </div>
+               <div class="item complex">
+                    <div class="title">ATRACURIO (TRACRIUM):</div>
+                    <div class="sub white">Rango Intubación: 0,30 mg/kg - 0,60 mg/kg</div>
+                    <div class="calc red"><span id="atraMgMin">-- mg</span> <span id="atraMgMax" style="margin-left:1rem;">-- mg</span></div>
+                    <div class="sub red">SI 10 mg/ml: <span class="green" style="margin-left:0.5rem;"><span id="atraMlMin">-- ml</span></span> <span class="green" style="margin-left:1.5rem;"><span id="atraMlMax">-- ml</span></span></div>
+                    <div class="sub white" style="margin-top:0.5rem;text-align:center;">PERFUSIÓN IV BOMBA: 5 A 9 microgramos/kg/minuto</div>
+                </div>
+            </section>
+
+            <!-- Antiemeticos -->
+            <section class="category">
+                <h2>ANTIEMÉTICOS</h2>
+                <div class="item complex">
+                    <div class="title">ZOFRAN (0,1 mg/kg):</div>
+                    <div class="calc red" id="zofranMg">-- mg</div>
+                    <div class="sub red">SI 2 mg/ml: <span class="green" id="zofranMl">-- ml</span></div>
+                </div>
+                <div class="item complex">
+                    <div class="title">FORTECORTIN (0,1 mg/kg):</div>
+                    <div class="calc red" id="forteMg">-- mg</div>
+                    <div class="sub red">SI 4 mg/ml: <span class="green" id="forteMl">-- ml</span></div>
+                </div>
+            </section>
+
+             <!-- Reversion -->
+            <section class="category">
+                <h2>REVERSIÓN RELAJANTES</h2>
+                <div class="item complex">
+                    <div class="title">PROSTIGMINA (0,05 mg/kg): <span class="red" id="prostigminaMg">-- mg</span></div>
+                    <div class="sub green">(máx. 2 mg)</div>
+                    <div class="sub red" style="text-align:center">SI 0,5 mg/ml: <span class="green" id="prostigminaMl">-- ml</span></div>
+                    
+                    <div class="sub white" style="text-align:center; font-weight:bold; margin: 0.5rem 0;">+</div>
+
+                    <div class="title">ATROPINA (0,025 mg/kg): <span class="red" id="atroRevMg">-- mg</span></div>
+                    <div class="sub green">(máx. 1 mg)</div>
+                    <div class="sub red" style="text-align:center">SI 1 mg/ml: <span class="green" id="atroRevMl">-- ml</span></div>
+                    <hr style="border-color: #333; margin: 1rem 0;">
+                    
+                    <div class="title" style="display:flex; justify-content:space-between;">SUGAMMADEX <span>2 mg/kg: <span class="green" id="suga2Mg">-- mg</span></span></div>
+                    <div class="title" style="display:flex; justify-content:flex-end;"><span>4 mg/kg: <span class="green" id="suga4Mg">-- mg</span></span></div>
+                    <div class="title" style="display:flex; justify-content:space-between;">Recuperación rápida 16 mg/kg: <span><span class="green" id="suga16Mg">-- mg</span></span></div>
+                </div>
+            </section>
+
+             <!-- Analgésicos postoperatorio -->
+             <section class="category">
+                <h2>ANALGÉSICOS EN POSTOPERATORIO</h2>
+                
+                <div class="item complex">
+                    <div class="title">TRAMADOL (1,5 mg/kg):</div>
+                    <div class="calc red" id="tramaMg">-- mg</div>
+                    <div class="sub red">SI 50 mg/ml: <span class="green" id="tramaMl">-- ml</span></div>
+                </div>
+
+                <div class="item complex">
+                    <div class="title">PARACETAMOL (10 mg/kg):</div>
+                    <div class="calc red" id="paraMg">-- mg</div>
+                    <div class="sub red">SI 10 mg/ml: <span class="green" id="paraMl">-- ml</span></div>
+                </div>
+
+                <div class="item complex">
+                    <div class="title">NOLOTIL (15 mg/kg): <span class="red" id="nolotilMg">-- mg</span></div>
+                    <div class="sub green">(máx. 2 gr.)</div>
+                    <div class="sub red">SI 400 mg/ml: <span class="green" id="nolotilMl">-- ml</span></div>
+                </div>
+
+                <div class="item complex">
+                    <div class="title">KETOROLACO (0,5 mg/kg):</div>
+                    <div class="calc red" id="ketoMg">-- mg</div>
+                    <div class="sub red">SI 30 mg/ml: <span class="green" id="ketoMl">-- ml</span></div>
+                </div>
+
+                <div class="item complex">
+                    <div class="title">DOLANTINA (0,5 mg/kg): <span class="red" id="dolaMg">-- mg</span></div>
+                    <div class="sub green">(máx. 1 mg/kg.)</div>
+                    <div class="sub red">SI 50 mg/ml: <span class="green" id="dolaMl">-- ml</span></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
